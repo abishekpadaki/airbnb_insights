@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+#from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import csv
 import time
@@ -84,7 +84,7 @@ def save_to_csv(listings, file_name):
 def scrape_property_data(driver, button_css_selector):
     wait = WebDriverWait(driver, 10)
     time.sleep(8)  # Give the page time to load
-    
+
     # Click on the button to open the modal
     button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class,l1j9v1wn)]')))
     button.click()
@@ -107,6 +107,57 @@ def scrape_property_data(driver, button_css_selector):
     
     return modal_content
 
+def scrape_houserules_data(driver):
+    wait = WebDriverWait(driver, 10)
+    time.sleep(2)  # Give the page time to load
+    all_rules = []
+
+    try:
+        buttons = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//button[@class="l1j9v1wn b1k5q1b3 v18vkvko dir dir-ltr"]')))
+        button = buttons[2]
+        button.click()
+        # Scrape data from the modal
+        modal = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class, "cvgxlsq dir dir-ltr")]')))
+        try:
+            rules = modal.find_elements(By.XPATH,'//div[@class="t1rc5p4c dir dir-ltr"]')
+            for rule in rules:
+                all_rules.append(rule.text)
+        finally:
+            close_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class, "l1j9v1wn czcfm7x dir dir-ltr") and contains(@aria-label, "Close")]')))
+            close_button.click()
+    except:
+        all_rules = []
+
+    return all_rules
+
+def scrape_property_data_2(driver):
+    wait = WebDriverWait(driver, 10)
+    time.sleep(8)  # Give the page time to load
+    print("finished loading details page")
+    new_columns = {}
+    rating_names = ['Cleanliness', 'Accuracy', 'Communication', 'Location', 'Check-in', 'Value']
+    try:
+        new_columns['rating'] = wait.until(EC.presence_of_element_located((By.XPATH, '//span[contains(@class, "_17p6nbba")]'))).text
+        new_columns['reviews'] = wait.until(EC.presence_of_element_located((By.XPATH, '//button[contains(@class, "l1j9v1wn bbkw4bl c1rxa9od dir dir-ltr")]'))).text
+        rating_categories = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "_a3qxec")]')))
+
+        for ratings in rating_categories:
+            name = ratings.find_element(By.XPATH,'.//div[contains(@class, "_y1ba89")]').text
+            rt = ratings.find_element(By.XPATH,'.//div[contains(@class, "_bgq2leu")]//span[contains(@class, "_4oybiu")]').text
+            new_columns[f"rating_{name}"] = rt
+            
+    except:
+        new_columns['rating'] = '-'
+        new_columns['reviews'] = '-'
+        new_columns.update({f"rating_{rating}": "-" for rating in rating_names})
+
+    try:
+        new_columns['superhost'] = wait.until(EC.presence_of_element_located((By.XPATH, '//span[contains(@class, "_1mhorg9")]'))).text
+    except:
+        new_columns['superhost'] = '-'
+
+    new_columns['house_rules'] = scrape_houserules_data(driver)
+    return new_columns
 
 def amenities_to_csv(driver):
     # Read the input CSV file
@@ -114,22 +165,29 @@ def amenities_to_csv(driver):
     data = pd.read_csv(input_file)
 
     # Add a new column for scraped data
-    data['modal_content'] = ''
+    #data['modal_content'] = ''
 
     # Modify the button_css_selector, modal-content-selector, and modal-close-button-selector with the appropriate values
     button_css_selector = '.l1j9v1wn'
-
+    all_cols = {}
     # Scrape data for each URL and append it to the same row
     for index, row in data.iterrows():
         url = row['link']
         driver.get(url)
-        modal_content = scrape_property_data(driver, button_css_selector)
-        
-        data.at[index, 'modal_content'] = modal_content
-        break
+        #modal_content = scrape_property_data(driver, button_css_selector)
+        new_columns = scrape_property_data_2(driver)
+        for col, val in new_columns.items():
+            if col in all_cols:
+                all_cols[col].append(val)
+            else:
+                all_cols[col] = [val]
+        #data.at[index, 'modal_content'] = modal_content
 
     # Overwrite the input CSV file with the updated data
+    for col, val in all_cols.items():
+        data[col] = val
     data.to_csv(input_file, index=False)
+
 def main():
     # Set up the web driver
     browser = 'chrome'  # or 'firefox'
@@ -142,7 +200,8 @@ def main():
 
     # Scrape listings
     url = 'https://www.airbnb.com/s/san-francisco/homes'  # Replace with your desired search URL
-    num_pages = 15  # Number of pages you want to scrape
+    #num_pages = 15  # Number of pages you want to scrape
+    num_pages = 1
     listings = scrape_listings(driver, url, num_pages)
 
     # Save listings to CSV
