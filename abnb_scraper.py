@@ -109,11 +109,17 @@ def scrape_property_data(driver, button_css_selector):
     return modal_content
 
 def amentity_scraper(driver):
+    amenity_details = {}
     amenity_available = []
-    # click the button to open the Modal with Amenities
+    num_amenities = 0
+
     wait = WebDriverWait(driver, 10)
-    button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class,"l1j9v1wn b65jmrv v7aged4 dir dir-ltr")]')))
-    button.click()
+
+    button_parent = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class,"b9672i7 dir dir-ltr")]')))
+    button_text = button_parent.find_element(By.XPATH,".//button[@class='l1j9v1wn b65jmrv v7aged4 dir dir-ltr']").text
+
+    num_amenities = int(''.join(filter(str.isdigit, button_text)))
+    amenity_details['num_of_amenities'] = num_amenities
 
     # wait for the modal to open
     amenities_modal = WebDriverWait(driver, 10).until(
@@ -126,15 +132,37 @@ def amentity_scraper(driver):
     # print each amenity line
     for amenity in amenities_list:
         amenity_available.append(amenity.text)
+    amenity_details['available_amenities'] = amenity_available
 
     time.sleep(1)
     # close the modal
-    close_panel = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//div[contains(@class,'c10hl6ue dir dir-ltr')]"))
-    )
+    return amenity_details
 
-    close_panel.click()
-    return amenity_available
+def infra_specs_scraper(driver):
+    wait = WebDriverWait(driver, 10)
+    infra_details = {}
+    max_guests = 0
+    num_rooms = 0
+    num_beds = 0
+    num_baths = 0
+
+    overview_section = wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@data-section-id,'OVERVIEW_DEFAULT')]")))
+    overview_list = overview_section.find_elements(By.XPATH,".//li[@class='l7n4lsf dir dir-ltr']")
+
+    max_guests = int(''.join(filter(str.isdigit, overview_list[0].text)))
+    num_rooms = (1 if 'Studio' in overview_list[1].text else int(''.join(filter(str.isdigit, overview_list[1].text))))
+    num_beds = int(''.join(filter(str.isdigit, overview_list[2].text)))
+    num_baths = float(''.join(filter(str.isdigit, overview_list[3].text)))
+
+    infra_details['max_guests'] = max_guests
+    infra_details['num_rooms'] = num_rooms
+    infra_details['num_beds'] = num_beds
+    infra_details['num_baths'] = num_baths
+
+    return infra_details
+
+
+
 
 def scrape_houserules_data(driver):
     wait = WebDriverWait(driver, 10)
@@ -197,25 +225,28 @@ def amenities_to_csv(driver):
     #data['modal_content'] = ''
 
     # Modify the button_css_selector, modal-content-selector, and modal-close-button-selector with the appropriate values
-    button_css_selector = '.l1j9v1wn'
     all_cols = {}
     # Scrape data for each URL and append it to the same row
     for index, row in data.iterrows():
         url = row['link']
         driver.get(url)
-        #modal_content = scrape_property_data(driver, button_css_selector)
-        new_columns = scrape_property_data_2(driver)
-        for col, val in new_columns.items():
-            if col in all_cols:
-                all_cols[col].append(val)
-            else:
-                all_cols[col] = [val]
+        amenity_object = amentity_scraper(driver)
+        infra_deets = infra_specs_scraper(driver)
+        print(amenity_object)
+        print(infra_deets)
+        break
+        # new_columns = scrape_property_data_2(driver)
+        # for col, val in new_columns.items():
+        #     if col in all_cols:
+        #         all_cols[col].append(val)
+        #     else:
+        #         all_cols[col] = [val]
         #data.at[index, 'modal_content'] = modal_content
 
     # Overwrite the input CSV file with the updated data
-    for col, val in all_cols.items():
-        data[col] = val
-    data.to_csv(input_file, index=False)
+    # for col, val in all_cols.items():
+    #     data[col] = val
+    # data.to_csv(input_file, index=False)
 
 def main():
     # Set up the web driver
@@ -228,14 +259,14 @@ def main():
     # login_airbnb(driver, username, password)
 
     # Scrape listings
-    url = 'https://www.airbnb.com/s/san-francisco/homes'  # Replace with your desired search URL
+    # url = 'https://www.airbnb.com/s/san-francisco/homes'  # Replace with your desired search URL
     #num_pages = 15  # Number of pages you want to scrape
-    num_pages = 1
-    listings = scrape_listings(driver, url, num_pages)
+    # num_pages = 1
+    # listings = scrape_listings(driver, url, num_pages)
 
     # Save listings to CSV
-    file_name = 'airbnb_listings.csv'
-    save_to_csv(listings, file_name)
+    # file_name = 'airbnb_listings.csv'
+    # save_to_csv(listings, file_name)
 
     amenities_to_csv(driver)
 
