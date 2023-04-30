@@ -82,6 +82,7 @@ def save_to_csv(listings, file_name):
         print("Written to csv File")
 
 # Define a function to scrape data from a property page
+#Old amenity scraper
 def scrape_property_data(driver, button_css_selector):
     wait = WebDriverWait(driver, 10)
     time.sleep(8)  # Give the page time to load
@@ -107,6 +108,34 @@ def scrape_property_data(driver, button_css_selector):
     close_button.click()
     
     return modal_content
+
+def amentity_scraper(driver):
+    amenity_available = []
+    # click the button to open the Modal with Amenities
+    wait = WebDriverWait(driver, 10)
+    button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class,"l1j9v1wn b65jmrv v7aged4 dir dir-ltr")]')))
+    button.click()
+
+    # wait for the modal to open
+    amenities_modal = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//div[contains(@data-section-id,'AMENITIES_DEFAULT')]"))
+    )
+
+    # get all the lines inside the modal
+    amenities_list = amenities_modal.find_elements(By.XPATH,".//div[@class='_19xnuo97']")
+
+    # print each amenity line
+    for amenity in amenities_list:
+        amenity_available.append(amenity.text)
+
+    time.sleep(1)
+    # close the modal
+    close_panel = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//div[contains(@class,'c10hl6ue dir dir-ltr')]"))
+    )
+
+    close_panel.click()
+    return amenity_available
 
 def scrape_houserules_data(driver):
     wait = WebDriverWait(driver, 10)
