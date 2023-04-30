@@ -38,6 +38,7 @@ def scrape_listings(driver, url, num_pages):
         listing_elements = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "c4mnd7m")]')))
         for listing in listing_elements:
             title = listing.find_element(By.XPATH,'.//span[contains(@class, "t6mzqp7")]').text
+            room_type = listing.find_element(By.XPATH,'.//div[contains(@class, "t1jojoys")]').text
             price = listing.find_element(By.XPATH,'.//div[contains(@class, "pquyp1l")]').text
             link = listing.find_element(By.XPATH,'.//a[contains(@class, "l1j9v1wn")]').get_attribute('href')
             # rating = listing.find_element(By.XPATH, '//*[contains(@class, "r1dxllyb")][self::span or self::div]').text
@@ -53,7 +54,7 @@ def scrape_listings(driver, url, num_pages):
             #     rating = 'New'
             #     review = 'New'
             #list_obj = {'title': title, 'price': price, 'link': link, 'rating': rating, 'review': review}
-            list_obj = {'title': title, 'price': price, 'link': link}
+            list_obj = {'title': title, 'price': price, 'link': link, 'room_type': room_type}
 
             if list_obj in listings:
                 continue
@@ -73,7 +74,7 @@ def scrape_listings(driver, url, num_pages):
 def save_to_csv(listings, file_name):
     with open(file_name, 'w', newline='', encoding='utf-8') as csvfile:
         #fieldnames = ['title', 'price', 'link', 'rating', 'review']
-        fieldnames = ['title', 'price', 'link']
+        fieldnames = ['title', 'price', 'link', 'room_type']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for listing in listings:
@@ -111,22 +112,25 @@ def scrape_houserules_data(driver):
     wait = WebDriverWait(driver, 10)
     time.sleep(2)  # Give the page time to load
     all_rules = []
+    def close_modal():
+        close_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class, "l1j9v1wn czcfm7x dir dir-ltr") and contains(@aria-label, "Close")]')))
+        close_button.click()
 
-    try:
-        buttons = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//button[@class="l1j9v1wn b1k5q1b3 v18vkvko dir dir-ltr"]')))
-        button = buttons[2]
-        button.click()
-        # Scrape data from the modal
-        modal = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class, "cvgxlsq dir dir-ltr")]')))
+    things_to_know_divs = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class,"c1e17v3g dir dir-ltr")]')))
+    for things_div in things_to_know_divs:
+        title = things_div.find_element(By.XPATH, './/h3[@class="hghzvl1 dir dir-ltr"]').text
+        # Only go through the House rules modal
+        if str(title).strip() != 'House rules':
+            continue
+        show_more_btn = things_div.find_element(By.XPATH, './/button[@class="l1j9v1wn b1k5q1b3 v18vkvko dir dir-ltr"]')
+        show_more_btn.click()
+        modal = wait.until(EC.presence_of_element_located((By.XPATH, './/div[contains(@class, "cvgxlsq dir dir-ltr")]')))
         try:
-            rules = modal.find_elements(By.XPATH,'//div[@class="t1rc5p4c dir dir-ltr"]')
+            rules = modal.find_elements(By.XPATH,'.//div[@class="t1rc5p4c dir dir-ltr"]')
             for rule in rules:
                 all_rules.append(rule.text)
         finally:
-            close_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class, "l1j9v1wn czcfm7x dir dir-ltr") and contains(@aria-label, "Close")]')))
-            close_button.click()
-    except:
-        all_rules = []
+            close_modal()
 
     return all_rules
 
@@ -152,7 +156,12 @@ def scrape_property_data_2(driver):
         new_columns.update({f"rating_{rating}": "-" for rating in rating_names})
 
     try:
-        new_columns['superhost'] = wait.until(EC.presence_of_element_located((By.XPATH, '//span[contains(@class, "_1mhorg9")]'))).text
+        new_columns['superhost'] = '-'
+        info_divs = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//span[contains(@class, "_1mhorg9")]')))
+        for div in info_divs:
+            if str(div.text).strip() == 'Superhost':
+                new_columns['superhost'] = 'Superhost'
+                break
     except:
         new_columns['superhost'] = '-'
 
