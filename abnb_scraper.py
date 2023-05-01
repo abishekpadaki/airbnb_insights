@@ -56,15 +56,6 @@ def amentity_scraper(driver):
     num_amenities = 0
 
     wait = WebDriverWait(driver, 10)
-<<<<<<< HEAD
-
-    button_parent = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class,"b9672i7 dir dir-ltr")]')))
-    button_text = button_parent.find_element(By.XPATH,".//button[@class='l1j9v1wn b65jmrv v7aged4 dir dir-ltr']").text
-
-    num_amenities = int(''.join(filter(str.isdigit, button_text)))
-    amenity_details['num_of_amenities'] = num_amenities
-=======
->>>>>>> origin/main
 
     try:
         button_parent = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class,"b9672i7 dir dir-ltr")]')))
@@ -75,42 +66,6 @@ def amentity_scraper(driver):
     except:
         amenity_details['num_of_amenities'] = 0
 
-<<<<<<< HEAD
-    # print each amenity line
-    for amenity in amenities_list:
-        amenity_available.append(amenity.text)
-    amenity_details['available_amenities'] = amenity_available
-
-    time.sleep(1)
-    # close the modal
-    return amenity_details
-
-def infra_specs_scraper(driver):
-    wait = WebDriverWait(driver, 10)
-    infra_details = {}
-    max_guests = 0
-    num_rooms = 0
-    num_beds = 0
-    num_baths = 0
-
-    overview_section = wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@data-section-id,'OVERVIEW_DEFAULT')]")))
-    overview_list = overview_section.find_elements(By.XPATH,".//li[@class='l7n4lsf dir dir-ltr']")
-
-    max_guests = int(''.join(filter(str.isdigit, overview_list[0].text)))
-    num_rooms = (1 if 'Studio' in overview_list[1].text else int(''.join(filter(str.isdigit, overview_list[1].text))))
-    num_beds = int(''.join(filter(str.isdigit, overview_list[2].text)))
-    num_baths = float(''.join(filter(str.isdigit, overview_list[3].text)))
-
-    infra_details['max_guests'] = max_guests
-    infra_details['num_rooms'] = num_rooms
-    infra_details['num_beds'] = num_beds
-    infra_details['num_baths'] = num_baths
-
-    return infra_details
-
-
-
-=======
     try:
         # wait for the modal to open
         amenities_modal = WebDriverWait(driver, 10).until(
@@ -167,7 +122,6 @@ def infra_specs_scraper(driver):
 
 
     return infra_details
->>>>>>> origin/main
 
 def scrape_houserules_data(driver):
     wait = WebDriverWait(driver, 10)
@@ -237,31 +191,6 @@ def scrape_details_page(driver, df_row):
     #time.sleep(5)  # Give the page time to load
     modified_row = df_row._asdict()
 
-<<<<<<< HEAD
-    # Modify the button_css_selector, modal-content-selector, and modal-close-button-selector with the appropriate values
-    all_cols = {}
-    # Scrape data for each URL and append it to the same row
-    for index, row in data.iterrows():
-        url = row['link']
-        driver.get(url)
-        amenity_object = amentity_scraper(driver)
-        infra_deets = infra_specs_scraper(driver)
-        print(amenity_object)
-        print(infra_deets)
-        break
-        # new_columns = scrape_property_data_2(driver)
-        # for col, val in new_columns.items():
-        #     if col in all_cols:
-        #         all_cols[col].append(val)
-        #     else:
-        #         all_cols[col] = [val]
-        #data.at[index, 'modal_content'] = modal_content
-
-    # Overwrite the input CSV file with the updated data
-    # for col, val in all_cols.items():
-    #     data[col] = val
-    # data.to_csv(input_file, index=False)
-=======
     # scrape the details available on page
     details = review_ratings_host_scraper(driver)
     modified_row.update(details)
@@ -300,7 +229,6 @@ def save_to_csv(df, file_name, start_index=0, end_index=0):
         df.iloc[start_index:].to_csv(file_name, mode='a', index=False, header=False)
     else:
         df.iloc[start_index:end_index].to_csv(file_name, mode='a', index=False, header=False)
->>>>>>> origin/main
 
 def main():
     # Set up the web driver
@@ -312,17 +240,6 @@ def main():
     # password = 'your_password'
     # login_airbnb(driver, username, password)
 
-<<<<<<< HEAD
-    # Scrape listings
-    # url = 'https://www.airbnb.com/s/san-francisco/homes'  # Replace with your desired search URL
-    #num_pages = 15  # Number of pages you want to scrape
-    # num_pages = 1
-    # listings = scrape_listings(driver, url, num_pages)
-
-    # Save listings to CSV
-    # file_name = 'airbnb_listings.csv'
-    # save_to_csv(listings, file_name)
-=======
     #create a dataframe to store listings
     df_columns = [
         'city', 'state', 'coast', 'title', 'price', 'link', 'room_type', 'max_guests', 'num_rooms', 'num_beds', 'num_baths', 
@@ -370,7 +287,6 @@ def main():
         save_to_csv(city_df, output_file, failure_row_index)
         print("--- %s seconds ---" % (time.time() - start_time))
         print()
->>>>>>> origin/main
 
 
     # Close the web driver
