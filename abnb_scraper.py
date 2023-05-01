@@ -2,15 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-#from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-import csv
 import time
 import pandas as pd
-from bs4 import BeautifulSoup
-
-import time
-import csv
+import json
 
 def init_driver(browser):
     if browser.lower() == 'chrome':
@@ -26,22 +21,25 @@ def init_driver(browser):
     return driver
 
 
-def scrape_listings(driver, url, num_pages, listings_df):
+def scrape_listings(driver, city, url, num_pages, listings_df):
     driver.get(url)
-
+    total_listings = 0
     for _ in range(num_pages):
         wait = WebDriverWait(driver, 10)
         time.sleep(5)  # Give the page time to load
-
         # Scrape listings data
         listing_elements = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "c4mnd7m")]')))
         for listing in listing_elements:
             new_listing = {}
+            new_listing['city'] = city['city']
+            new_listing['state'] = city['state']
+            new_listing['coast'] = city['coast']
             new_listing['title'] = listing.find_element(By.XPATH,'.//span[contains(@class, "t6mzqp7")]').text
             new_listing['room_type'] = listing.find_element(By.XPATH,'.//div[contains(@class, "t1jojoys")]').text
             new_listing['price'] = listing.find_element(By.XPATH,'.//div[contains(@class, "pquyp1l")]').text
             new_listing['link'] = listing.find_element(By.XPATH,'.//a[contains(@class, "l1j9v1wn")]').get_attribute('href')
             listings_df = listings_df.append(new_listing, ignore_index=True)
+            total_listings += 1
 
         # Go to the next page
         try:
@@ -49,10 +47,8 @@ def scrape_listings(driver, url, num_pages, listings_df):
             next_button.click()
         except:
             break
-    
-    listings_df = listings_df.drop_duplicates()
 
-    return listings_df
+    return listings_df, total_listings
 
 def amentity_scraper(driver):
     amenity_details = {}
@@ -61,26 +57,31 @@ def amentity_scraper(driver):
 
     wait = WebDriverWait(driver, 10)
 
-    button_parent = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class,"b9672i7 dir dir-ltr")]')))
-    button_text = button_parent.find_element(By.XPATH,".//button[@class='l1j9v1wn b65jmrv v7aged4 dir dir-ltr']").text
+    try:
+        button_parent = wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(@class,"b9672i7 dir dir-ltr")]')))
+        button_text = button_parent.find_element(By.XPATH,".//button[@class='l1j9v1wn b65jmrv v7aged4 dir dir-ltr']").text
 
-    num_amenities = int(''.join(filter(str.isdigit, button_text)))
-    amenity_details['num_of_amenities'] = num_amenities
+        num_amenities = int(''.join(filter(str.isdigit, button_text)))
+        amenity_details['num_of_amenities'] = num_amenities
+    except:
+        amenity_details['num_of_amenities'] = 0
 
-    # wait for the modal to open
-    amenities_modal = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//div[contains(@data-section-id,'AMENITIES_DEFAULT')]"))
-    )
+    try:
+        # wait for the modal to open
+        amenities_modal = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[contains(@data-section-id,'AMENITIES_DEFAULT')]"))
+        )
 
-    # get all the lines inside the modal
-    amenities_list = amenities_modal.find_elements(By.XPATH,".//div[@class='_19xnuo97']")
+        # get all the lines inside the modal
+        amenities_list = amenities_modal.find_elements(By.XPATH,".//div[@class='_19xnuo97']")
 
-    # print each amenity line
-    for amenity in amenities_list:
-        amenity_available.append(amenity.text)
-    amenity_details['available_amenities'] = amenity_available
+        # print each amenity line
+        for amenity in amenities_list:
+            amenity_available.append(amenity.text)
+        amenity_details['available_amenities'] = amenity_available
+    except:
+        amenity_details['available_amenities'] = amenity_available
 
-    # time.sleep(1)
     return amenity_details
 
 def infra_specs_scraper(driver):
@@ -152,7 +153,7 @@ def review_ratings_host_scraper(driver):
     wait = WebDriverWait(driver, 10)
     rating_names = ['Cleanliness', 'Accuracy', 'Communication', 'Location', 'Check-in', 'Value']
     details = {}
-    # scrape the details available on page
+    # Scrape the details available on page
     try:
         rating = wait.until(EC.presence_of_element_located((By.XPATH, '//span[contains(@class, "_17p6nbba")]'))).text
         details['rating'] = str(rating).strip("·")
@@ -187,7 +188,6 @@ def review_ratings_host_scraper(driver):
     return details
 
 def scrape_details_page(driver, df_row):
-    wait = WebDriverWait(driver, 10)
     #time.sleep(5)  # Give the page time to load
     modified_row = df_row._asdict()
 
@@ -201,20 +201,34 @@ def scrape_details_page(driver, df_row):
     infra_specs = infra_specs_scraper(driver)
     modified_row.update(infra_specs)
 
-    # scrape modal
+    # scrape rules modal
     modified_row['house_rules'] = scrape_houserules_data(driver)
 
     return modified_row
 
-def scrape_all_listing_urls(driver, listings_df):
-    total_rows = listings_df.shape[0]
-    for row in listings_df.itertuples():
-        curr_url = row.link
-        driver.get(curr_url)
-        listings_df.loc[row.Index] = scrape_details_page(driver, row)
-        print("Finished scraping listing", row.Index+1, "/", total_rows)
+def scrape_all_listing_urls(driver, city_df, output_file_name, failure_row_index=0):
+    total_listings = city_df.shape[0]
+    for row in city_df.itertuples():
+        try:
+            curr_url = row.link
+            driver.get(curr_url)
+            city_df.loc[row.Index] = scrape_details_page(driver, row)
+            print("Finished scraping and saving listing", row.Index + 1, "/", total_listings)
+        except Exception as e:
+            # In case of failure, save all rows till now to csv and move to next row
+            print(f"Something went wrong with listing {row.Index+1} in city {row.city}. Saving all rows to csv till now and moving on.")
+            print("Exception:", e)
+            save_to_csv(city_df, output_file_name, failure_row_index, row.Index)
+            failure_row_index = (row.Index + 1)
+            continue
 
-    return listings_df
+    return city_df, failure_row_index
+
+def save_to_csv(df, file_name, start_index=0, end_index=0):
+    if end_index == 0:
+        df.iloc[start_index:].to_csv(file_name, mode='a', index=False, header=False)
+    else:
+        df.iloc[start_index:end_index].to_csv(file_name, mode='a', index=False, header=False)
 
 def main():
     # Set up the web driver
@@ -227,23 +241,53 @@ def main():
     # login_airbnb(driver, username, password)
 
     #create a dataframe to store listings
-    df_columns = ['title', 'price', 'link', 'room_type', 'max_guests', 'num_rooms', 'num_beds', 'num_baths', 'rating', 'reviews', 'rating_Cleanliness', 'rating_Accuracy', 'rating_Communication', 'rating_Location', 'rating_Check-in', 'rating_Value', 'superhost', 'house_rules', 'num_of_amenities', 'available_amenities']
+    df_columns = [
+        'city', 'state', 'coast', 'title', 'price', 'link', 'room_type', 'max_guests', 'num_rooms', 'num_beds', 'num_baths', 
+        'rating', 'reviews', 'rating_Cleanliness', 'rating_Accuracy', 'rating_Communication', 
+        'rating_Location', 'rating_Check-in', 'rating_Value', 'superhost', 'house_rules', 'num_of_amenities', 'available_amenities'
+    ]
     listings_df = pd.DataFrame(columns=df_columns)
 
-    # Scrape listings
-    url = 'https://www.airbnb.com/s/san-francisco/homes'  # Replace with your desired search URL
-    #num_pages = 15  # Number of pages you want to scrape
-    num_pages = 1
-    listings_df = scrape_listings(driver, url, num_pages, listings_df)
-    print("Finished searching for all listings!")
-    start_time = time.time()
-    listings_df = scrape_all_listing_urls(driver, listings_df)
-    print("--- %s seconds ---" % (time.time() - start_time))
-    
-    print("Writing to csv...")
-    # Save listings to CSV
-    output_file_name = 'airbnb_listings.csv'
-    listings_df.to_csv(output_file_name, index=False)
+    # Define different csv files for each coast
+    output_files = { 
+        'West': 'listings_west_coast.csv', 'East': 'listings_east_coast.csv', 
+        'North': 'listings_north_coast.csv', 'South': 'listings_south_coast.csv',
+        'Central': 'listings_central_coast.csv'
+    }
+
+    # Write header row to all csv files
+    for _, file in output_files.items():
+        listings_df.to_csv(file, index=False)
+
+    # Get list of city urls to scrape
+    cities = {}
+    with open('cities_list.json') as f:
+        cities = json.load(f)
+
+    # In case we want to limit the number of cities we scrape, uncomment this and edit coasts_to_scrape as needed
+    # coasts_to_scrape = ['West', 'East']
+    # cities = [city for city in cities if city['coast'] in coasts_to_scrape]
+
+    for city in cities:
+        city_str = city['url_string']
+        search_url = 'https://www.airbnb.com/s/' + city_str + '/homes'
+        num_pages = 1
+        failure_row_index = 0
+        output_file = output_files[city['coast']]
+        city_df = pd.DataFrame(columns=df_columns)
+
+        start_time = time.time()
+        city_df, num_listings = scrape_listings(driver, city, search_url, num_pages, city_df)
+        print(f"Finished searching for {num_listings} listings in {city['city']}, {city['state']}!")
+        city_df, failure_row_index = scrape_all_listing_urls(driver, city_df, output_file)
+        print(f"Finished scraping all listings in {city['city']}, {city['state']}!")
+
+        # Save listings to CSV
+        print(f"Writing all listings for {city['city']} to csv...")
+        save_to_csv(city_df, output_file, failure_row_index)
+        print("--- %s seconds ---" % (time.time() - start_time))
+        print()
+
 
     # Close the web driver
     driver.quit()
