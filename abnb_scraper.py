@@ -235,11 +235,6 @@ def main():
     browser = 'chrome'  # or 'firefox'
     driver = init_driver(browser)
 
-    # Log in to Airbnb (replace with your own credentials or skip this step if not needed)
-    # username = 'your_email@example.com'
-    # password = 'your_password'
-    # login_airbnb(driver, username, password)
-
     #create a dataframe to store listings
     df_columns = [
         'city', 'state', 'coast', 'title', 'price', 'link', 'room_type', 'max_guests', 'num_rooms', 'num_beds', 'num_baths', 
@@ -265,13 +260,13 @@ def main():
         cities = json.load(f)
 
     # In case we want to limit the number of cities we scrape, uncomment this and edit coasts_to_scrape as needed
-    # coasts_to_scrape = ['West', 'East']
-    # cities = [city for city in cities if city['coast'] in coasts_to_scrape]
+    coasts_to_scrape = ['East', 'West', 'North', 'South', 'Central']
+    cities = [city for city in cities if city['coast'] in coasts_to_scrape]
 
     for city in cities:
         city_str = city['url_string']
         search_url = 'https://www.airbnb.com/s/' + city_str + '/homes'
-        num_pages = 1
+        num_pages = 15
         failure_row_index = 0
         output_file = output_files[city['coast']]
         city_df = pd.DataFrame(columns=df_columns)
