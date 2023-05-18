@@ -8,6 +8,7 @@ import pandas as pd
 import json
 
 def init_driver(browser):
+    # Initialize the web driver based on the specified browser
     if browser.lower() == 'chrome':
         options = ChromeOptions()
         options.add_argument('--headless')
@@ -22,11 +23,13 @@ def init_driver(browser):
 
 
 def scrape_listings(driver, city, url, num_pages, listings_df):
+    # Scrape listings from the given URL and store them in a DataFrame
     driver.get(url)
     total_listings = 0
     for _ in range(num_pages):
         wait = WebDriverWait(driver, 10)
         time.sleep(5)  # Give the page time to load
+        
         # Scrape listings data
         listing_elements = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "c4mnd7m")]')))
         for listing in listing_elements:
@@ -51,6 +54,7 @@ def scrape_listings(driver, city, url, num_pages, listings_df):
     return listings_df, total_listings
 
 def amentity_scraper(driver):
+    # Scrape the available amenities for a listing
     amenity_details = {}
     amenity_available = []
     num_amenities = 0
@@ -67,15 +71,15 @@ def amentity_scraper(driver):
         amenity_details['num_of_amenities'] = 0
 
     try:
-        # wait for the modal to open
+        # Wait for the modal to open
         amenities_modal = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//div[contains(@data-section-id,'AMENITIES_DEFAULT')]"))
         )
 
-        # get all the lines inside the modal
+        # Get all the lines inside the modal
         amenities_list = amenities_modal.find_elements(By.XPATH,".//div[@class='_19xnuo97']")
 
-        # print each amenity line
+        # Store each amenity line
         for amenity in amenities_list:
             amenity_available.append(amenity.text)
         amenity_details['available_amenities'] = amenity_available
@@ -85,6 +89,7 @@ def amentity_scraper(driver):
     return amenity_details
 
 def infra_specs_scraper(driver):
+    # Scrape the infrastructure specifications for a listing
     wait = WebDriverWait(driver, 10)
     infra_details = {}
     max_guests = 0
@@ -105,7 +110,6 @@ def infra_specs_scraper(driver):
         num_rooms = (1 if 'Studio' in overview_list[1].text else int(''.join(filter(str.isdigit, overview_list[1].text)))) if len(overview_list) > 1 else 0
         infra_details['num_rooms'] = num_rooms
     except:
-
         infra_details['num_rooms'] = 0
 
     try:
@@ -120,14 +124,16 @@ def infra_specs_scraper(driver):
     except:
         infra_details['num_baths'] = 0
 
-
     return infra_details
 
 def scrape_houserules_data(driver):
+    # Scrape the house rules data for a listing
     wait = WebDriverWait(driver, 10)
     time.sleep(2)  # Give the page time to load
     all_rules = []
+
     def close_modal():
+        # Helper function to close the house rules modal
         close_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[contains(@class, "l1j9v1wn czcfm7x dir dir-ltr") and contains(@aria-label, "Close")]')))
         close_button.click()
 
@@ -150,10 +156,12 @@ def scrape_houserules_data(driver):
     return all_rules
 
 def review_ratings_host_scraper(driver):
+    # Scrape the review ratings and host details for a listing
     wait = WebDriverWait(driver, 10)
     rating_names = ['Cleanliness', 'Accuracy', 'Communication', 'Location', 'Check-in', 'Value']
     details = {}
-    # Scrape the details available on page
+
+    # Scrape the overall rating
     try:
         rating = wait.until(EC.presence_of_element_located((By.XPATH, '//span[contains(@class, "_17p6nbba")]'))).text
         details['rating'] = str(rating).strip("·")
@@ -165,9 +173,9 @@ def review_ratings_host_scraper(driver):
         for ratings in rating_categories:
             name = ratings.find_element(By.XPATH,'.//div[contains(@class, "_y1ba89")]').text
             rt = ratings.find_element(By.XPATH,'.//div[contains(@class, "_bgq2leu")]//span[contains(@class, "_4oybiu")]').text
-            details[f"rating_{name}"] = rt 
+            details[f"rating_{name}"] = rt
     except:
-        details.update({f"rating_{rating}": "-" for rating in rating_names}) 
+        details.update({f"rating_{rating}": "-" for rating in rating_names})
 
     try:
         reviews = wait.until(EC.presence_of_element_located((By.XPATH, '//button[contains(@class, "l1j9v1wn bbkw4bl c1rxa9od dir dir-ltr")]'))).text
@@ -188,25 +196,28 @@ def review_ratings_host_scraper(driver):
     return details
 
 def scrape_details_page(driver, df_row):
-    #time.sleep(5)  # Give the page time to load
+    # Scrape all details available on the listing page
     modified_row = df_row._asdict()
 
-    # scrape the details available on page
+    # Scrape review ratings and host details
     details = review_ratings_host_scraper(driver)
     modified_row.update(details)
 
+    # Scrape available amenities
     amenities = amentity_scraper(driver)
     modified_row.update(amenities)
 
+    # Scrape infrastructure specifications
     infra_specs = infra_specs_scraper(driver)
     modified_row.update(infra_specs)
 
-    # scrape rules modal
+    # Scrape house rules
     modified_row['house_rules'] = scrape_houserules_data(driver)
 
     return modified_row
 
 def scrape_all_listing_urls(driver, city_df, output_file_name, failure_row_index=0):
+    # Scrape all listing URLs in a city and save the details to a DataFrame
     total_listings = city_df.shape[0]
     for row in city_df.itertuples():
         try:
@@ -215,8 +226,8 @@ def scrape_all_listing_urls(driver, city_df, output_file_name, failure_row_index
             city_df.loc[row.Index] = scrape_details_page(driver, row)
             print("Finished scraping and saving listing", row.Index + 1, "/", total_listings)
         except Exception as e:
-            # In case of failure, save all rows till now to csv and move to next row
-            print(f"Something went wrong with listing {row.Index+1} in city {row.city}. Saving all rows to csv till now and moving on.")
+            # In case of failure, save all rows till now to CSV and move to the next row
+            print(f"Something went wrong with listing {row.Index+1} in city {row.city}. Saving all rows to CSV till now and moving on.")
             print("Exception:", e)
             save_to_csv(city_df, output_file_name, failure_row_index, row.Index)
             failure_row_index = (row.Index + 1)
@@ -225,6 +236,7 @@ def scrape_all_listing_urls(driver, city_df, output_file_name, failure_row_index
     return city_df, failure_row_index
 
 def save_to_csv(df, file_name, start_index=0, end_index=0):
+    # Save a subset of a DataFrame to a CSV file
     if end_index == 0:
         df.iloc[start_index:].to_csv(file_name, mode='a', index=False, header=False)
     else:
@@ -235,7 +247,7 @@ def main():
     browser = 'chrome'  # or 'firefox'
     driver = init_driver(browser)
 
-    #create a dataframe to store listings
+    # Create a DataFrame to store listings
     df_columns = [
         'city', 'state', 'coast', 'title', 'price', 'link', 'room_type', 'max_guests', 'num_rooms', 'num_beds', 'num_baths', 
         'rating', 'reviews', 'rating_Cleanliness', 'rating_Accuracy', 'rating_Communication', 
@@ -243,18 +255,18 @@ def main():
     ]
     listings_df = pd.DataFrame(columns=df_columns)
 
-    # Define different csv files for each coast
+    # Define different CSV files for each coast
     output_files = { 
         'West': 'listings_west_coast.csv', 'East': 'listings_east_coast.csv', 
         'North': 'listings_north_coast.csv', 'South': 'listings_south_coast.csv',
         'Central': 'listings_central_coast.csv'
     }
 
-    # Write header row to all csv files
+    # Write header row to all CSV files
     for _, file in output_files.items():
         listings_df.to_csv(file, index=False)
 
-    # Get list of city urls to scrape
+    # Get list of city URLs to scrape
     cities = {}
     with open('cities_list.json') as f:
         cities = json.load(f)
@@ -278,11 +290,10 @@ def main():
         print(f"Finished scraping all listings in {city['city']}, {city['state']}!")
 
         # Save listings to CSV
-        print(f"Writing all listings for {city['city']} to csv...")
+        print(f"Writing all listings for {city['city']} to CSV...")
         save_to_csv(city_df, output_file, failure_row_index)
         print("--- %s seconds ---" % (time.time() - start_time))
         print()
-
 
     # Close the web driver
     driver.quit()
@@ -290,5 +301,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
