@@ -72,8 +72,8 @@ In order to run the scraper as a demo and generate a smaller dataset, you can ma
 Web scraping is subject to the terms of use of the website being scraped. Airbnb's terms of service do not allow for web scraping on ceratin pages of their website, and we have ensured to respect their robot policies. 
 
 
-# Dataset
-After running our scraper previously, we pre-processed and merged our datasets into one csv file which is stored here in the `Dataset` folder as `model_ready_dataset.csv`
+# Datasets
+After running our scraper previously, we pre-processed and merged our datasets (that can be found in `Dataset/Scraped data`) into one csv file which is stored here in the `Dataset` folder as `model_ready_dataset.csv`
 
 This dataset is used to run the EDA and train/test the models in the next section.
 
