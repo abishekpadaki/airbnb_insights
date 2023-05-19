@@ -14,7 +14,7 @@ This is a final-project for the course CS267 called "Unearthing Hidden Insights 
 - Lightgbm
 - Jupyter Notebook or any Python Notebook application
 
-You can install all dependencies above by running `pip3 install -r requirements.txt` Make sure you have pip installed to do this.
+You can install all dependencies above by running `pip3 install -r Code/requirements.txt` Make sure you have pip installed to do this.
 
 # Part 1 - Airbnb Scraper
 
@@ -31,7 +31,7 @@ This is a Python script for scraping Airbnb listing data. It uses Selenium WebDr
 2. Install the required Python libraries using pip:
 
 ```bash
-pip install selenium pandas
+pip3 install selenium pandas
 ```
 
 3. Download the appropriate WebDriver for your web browser:
@@ -45,10 +45,10 @@ pip install selenium pandas
 1. To run the script for all 700 cities (for a shorter dataset, skip to the next section), simply execute the following command in your terminal:
 
 ```bash
-python airbnb_scraper.py
+python Code/airbnb_scraper.py
 ```
 
-2. The script will start scraping Airbnb listings for different cities provided in the `cities_list.json` file.
+2. The script will start scraping Airbnb listings for different cities provided in the `Code/cities_list.json` file.
 
 3. The script generates CSV files with Airbnb listings for each coast (East, West, North, South, Central). The files will be named `listings_<coast_name>_coast.csv`.
 
@@ -73,15 +73,21 @@ Web scraping is subject to the terms of use of the website being scraped. Airbnb
 
 
 # Dataset
-After running our scraper previously, we pre-processed and merged our datasets into one csv file which is stored here as `model_ready_dataset`
+After running our scraper previously, we pre-processed and merged our datasets into one csv file which is stored here in the `Dataset` folder as `model_ready_dataset.csv`
 
 This dataset is used to run the EDA and train/test the models in the next section.
 
 # Running the EDA and Model Python Notebooks
+
+The two notebooks are in the `Code` folder.
 
 The first notebook is `airbnb_eda_notebook.ipynb` which was used to run our EDA processes.
 
 The second notebook is `airbnb_models_notebook.ipynb` which was used to train, test and compare our three models - XGBoost, LightGBM and a traditional Linear Regression model.
 
 To run both the notebooks, open them using Jupyter notebook or a python notebook editor of your choice.
+
+# Interactive Heatmap
+
+An interactive heatmap, as demoed during the presentation, can be seen by opening the file `us_heatmap_with_tooltips.html` in the `Code` folder
 

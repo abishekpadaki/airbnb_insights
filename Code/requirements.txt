@@ -1,0 +1,8 @@
+numpy
+pandas == 1.5.3
+plotly
+seaborn
+matplotlib
+xgboost
+lightgbm
+selenium
