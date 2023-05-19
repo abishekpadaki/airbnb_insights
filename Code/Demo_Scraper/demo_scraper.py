@@ -208,8 +208,8 @@ def scrape_details_page(driver, df_row):
     modified_row.update(amenities)
 
     # Scrape infrastructure specifications
-    infra_specs = infra_specs_scraper(driver)
-    modified_row.update(infra_specs)
+    # infra_specs = infra_specs_scraper(driver)
+    # modified_row.update(infra_specs)
 
     # Scrape house rules
     modified_row['house_rules'] = scrape_houserules_data(driver)
@@ -257,9 +257,7 @@ def main():
 
     # Define different CSV files for each coast
     output_files = { 
-        'West': 'listings_west_coast.csv', 'East': 'listings_east_coast.csv', 
-        'North': 'listings_north_coast.csv', 'South': 'listings_south_coast.csv',
-        'Central': 'listings_central_coast.csv'
+        'West': 'listings_west_coast.csv'
     }
 
     # Write header row to all CSV files
@@ -268,11 +266,11 @@ def main():
 
     # Get list of city URLs to scrape
     cities = {}
-    with open('Code/Scraper/cities_list.json') as f:
+    with open('Code/Demo_Scraper/sf.json') as f:
         cities = json.load(f)
 
     # In case we want to limit the number of cities we scrape, uncomment this and edit coasts_to_scrape as needed
-    coasts_to_scrape = ['East', 'West', 'North', 'South', 'Central']
+    coasts_to_scrape = ['West']
     cities = [city for city in cities if city['coast'] in coasts_to_scrape]
 
     for city in cities:
