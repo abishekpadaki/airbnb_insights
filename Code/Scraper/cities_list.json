@@ -1,0 +1,422 @@
+[
+ {
+  "city": "Seattle",
+  "state": "Washington",
+  "coast": "West",
+  "url_string": "seattle"
+ },
+ {
+  "city": "San Francisco",
+  "state": "California",
+  "coast": "West",
+  "url_string": "san-francisco"
+ },
+ {
+  "city": "Los Angeles",
+  "state": "California",
+  "coast": "West",
+  "url_string": "los-angeles"
+ },
+ {
+  "city": "Portland",
+  "state": "Oregon",
+  "coast": "West",
+  "url_string": "portland--oregon"
+ },
+ {
+  "city": "San Diego",
+  "state": "California",
+  "coast": "West",
+  "url_string": "san-diego"
+ },
+ {
+  "city": "Sacramento",
+  "state": "California",
+  "coast": "West",
+  "url_string": "sacramento"
+ },
+ {
+  "city": "San Jose",
+  "state": "California",
+  "coast": "West",
+  "url_string": "san-jose"
+ },
+ {
+  "city": "Anaheim",
+  "state": "California",
+  "coast": "West",
+  "url_string": "anaheim"
+ },
+ {
+  "city": "Santa Ana",
+  "state": "California",
+  "coast": "West",
+  "url_string": "santa-ana"
+ },
+ {
+  "city": "Riverside",
+  "state": "California",
+  "coast": "West",
+  "url_string": "riverside"
+ },
+ {
+  "city": "Tacoma",
+  "state": "Washington",
+  "coast": "West",
+  "url_string": "tacoma"
+ },
+ {
+  "city": "Coupeville",
+  "state": "Washington",
+  "coast": "West",
+  "url_string": "coupeville"
+ },
+ {
+  "city": "Astoria",
+  "state": "Oregon",
+  "coast": "West",
+  "url_string": "astoria"
+ },
+ {
+  "city": "Newport",
+  "state": "Oregon",
+  "coast": "West",
+  "url_string": "newport"
+ },
+ {
+  "city": "Dallas",
+  "state": "Texas",
+  "coast": "Central",
+  "url_string": "dallas"
+ },
+ {
+  "city": "Denver",
+  "state": "Colorado",
+  "coast": "Central",
+  "url_string": "denver"
+ },
+ {
+  "city": "St. Louis",
+  "state": "Missouri",
+  "coast": "Central",
+  "url_string": "st-louis"
+ },
+ {
+  "city": "Kansas City",
+  "state": "Missouri",
+  "coast": "Central",
+  "url_string": "kansas-city"
+ },
+ {
+  "city": "Oklahoma City",
+  "state": "Oklahoma",
+  "coast": "Central",
+  "url_string": "oklahoma-city"
+ },
+ {
+  "city": "Memphis",
+  "state": "Tennessee",
+  "coast": "Central",
+  "url_string": "memphis"
+ },
+ {
+  "city": "Des Moines",
+  "state": "Iowa",
+  "coast": "Central",
+  "url_string": "des-moines"
+ },
+ {
+  "city": "Omaha",
+  "state": "Nebraska",
+  "coast": "Central",
+  "url_string": "omaha"
+ },
+ {
+  "city": "Chicago",
+  "state": "Illinois",
+  "coast": "Central",
+  "url_string": "chicago"
+ },
+ {
+  "city": "Wichita",
+  "state": "Kansas",
+  "coast": "Central",
+  "url_string": "wichita"
+ },
+ {
+  "city": "Houston",
+  "state": "Texas",
+  "coast": "Central",
+  "url_string": "houston"
+ },
+ {
+  "city": "Nashville",
+  "state": "Tennessee",
+  "coast": "Central",
+  "url_string": "nashville"
+ },
+ {
+  "city": "Austin",
+  "state": "Texas",
+  "coast": "Central",
+  "url_string": "austin"
+ },
+ {
+  "city": "Knoxville",
+  "state": "Tennessee",
+  "coast": "Central",
+  "url_string": "knoxville"
+ },
+ {
+  "city": "Miami",
+  "state": "Florida",
+  "coast": "South",
+  "url_string": "miami"
+ },
+ {
+  "city": "New Orleans",
+  "state": "Louisiana",
+  "coast": "South",
+  "url_string": "new-orleans"
+ },
+ {
+  "city": "Orlando",
+  "state": "Florida",
+  "coast": "South",
+  "url_string": "orlando"
+ },
+ {
+  "city": "Raleigh",
+  "state": "North Carolina",
+  "coast": "South",
+  "url_string": "raleigh"
+ },
+ {
+  "city": "Birmingham",
+  "state": "Alabama",
+  "coast": "South",
+  "url_string": "birmingham"
+ },
+ {
+  "city": "Louisville",
+  "state": "Kentucky",
+  "coast": "South",
+  "url_string": "louisville"
+ },
+ {
+  "city": "Jackson",
+  "state": "Mississippi",
+  "coast": "South",
+  "url_string": "jackson"
+ },
+ {
+  "city": "Mobile",
+  "state": "Alabama",
+  "coast": "South",
+  "url_string": "mobile"
+ },
+ {
+  "city": "Charlotte",
+  "state": "North Carolina",
+  "coast": "South",
+  "url_string": "charlotte"
+ },
+ {
+  "city": "Charleston",
+  "state": "South Carolina",
+  "coast": "South",
+  "url_string": "charleston"
+ },
+ {
+  "city": "Jacksonville",
+  "state": "Florida",
+  "coast": "South",
+  "url_string": "jacksonville"
+ },
+ {
+  "city": "Tampa",
+  "state": "Florida",
+  "coast": "South",
+  "url_string": "tampa"
+ },
+ {
+  "city": "Baltimore",
+  "state": "Maryland",
+  "coast": "South",
+  "url_string": "baltimore"
+ },
+ {
+  "city": "Annapolis",
+  "state": "Maryland",
+  "coast": "South",
+  "url_string": "annapolis--maryland"
+ },
+ {
+  "city": "Manchester",
+  "state": "New Hampshire",
+  "coast": "North",
+  "url_string": "manchester--new-hampshire"
+ },
+ {
+  "city": "Burlington",
+  "state": "Vermont",
+  "coast": "North",
+  "url_string": "burlington"
+ },
+ {
+  "city": "Portland",
+  "state": "Maine",
+  "coast": "North",
+  "url_string": "portland--maine"
+ },
+ {
+  "city": "Minneapolis",
+  "state": "Minnesota",
+  "coast": "North",
+  "url_string": "minneapolis"
+ },
+ {
+  "city": "Ann Arbor",
+  "state": "Michigan",
+  "coast": "North",
+  "url_string": "ann-arbor"
+ },
+ {
+  "city": "Flint",
+  "state": "Michigan",
+  "coast": "North",
+  "url_string": "flint"
+ },
+ {
+  "city": "Plymouth",
+  "state": "Minnesota",
+  "coast": "North",
+  "url_string": "plymouth--minnesota"
+ },
+ {
+  "city": "Cleveland",
+  "state": "Ohio",
+  "coast": "North",
+  "url_string": "cleveland"
+ },
+ {
+  "city": "Cincinnati",
+  "state": "Ohio",
+  "coast": "North",
+  "url_string": "cincinnati"
+ },
+ {
+  "city": "Akron",
+  "state": "Ohio",
+  "coast": "North",
+  "url_string": "akron"
+ },
+ {
+  "city": "Brunswick",
+  "state": "Maine",
+  "coast": "North",
+  "url_string": "brunswick"
+ },
+ {
+  "city": "Auburn",
+  "state": "Maine",
+  "coast": "North",
+  "url_string": "auburn"
+ },
+ {
+  "city": "Rutland",
+  "state": "Vermont",
+  "coast": "North",
+  "url_string": "rutland"
+ },
+ {
+  "city": "Salem",
+  "state": "New Hampshire",
+  "coast": "North",
+  "url_string": "salem"
+ },
+ {
+  "city": "New York City",
+  "state": "New York",
+  "coast": "East",
+  "url_string": "new-york-city"
+ },
+ {
+  "city": "Boston",
+  "state": "Massachusetts",
+  "coast": "East",
+  "url_string": "boston"
+ },
+ {
+  "city": "Philadelphia",
+  "state": "Pennsylvania",
+  "coast": "East",
+  "url_string": "philadelphia"
+ },
+ {
+  "city": "Washington",
+  "state": "D.C.",
+  "coast": "East",
+  "url_string": "washington"
+ },
+ {
+  "city": "Atlanta",
+  "state": "Georgia",
+  "coast": "East",
+  "url_string": "atlanta"
+ },
+ {
+  "city": "Buffalo",
+  "state": "New York",
+  "coast": "East",
+  "url_string": "buffalo"
+ },
+ {
+  "city": "Virginia Beach",
+  "state": "Virginia",
+  "coast": "East",
+  "url_string": "virginia-beach"
+ },
+ {
+  "city": "Norfolk",
+  "state": "Virginia",
+  "coast": "East",
+  "url_string": "norfolk"
+ },
+ {
+  "city": "Providence",
+  "state": "Rhode Island",
+  "coast": "East",
+  "url_string": "providence"
+ },
+ {
+  "city": "Richmond",
+  "state": "Virginia",
+  "coast": "East",
+  "url_string": "richmond"
+ },
+ {
+  "city": "Savannah",
+  "state": "Georgia",
+  "coast": "East",
+  "url_string": "savannah"
+ },
+ {
+  "city": "Rochester",
+  "state": "New York",
+  "coast": "East",
+  "url_string": "rochester"
+ },
+ {
+  "city": "Syracuse",
+  "state": "New York",
+  "coast": "East",
+  "url_string": "syracuse"
+ },
+ {
+  "city": "Pittsburgh",
+  "state": "Pennsylvania",
+  "coast": "East",
+  "url_string": "pittsburgh"
+ }
+]

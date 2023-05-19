@@ -20,6 +20,8 @@ You can install all dependencies above by running `pip3 install -r Code/requirem
 
 `abnb_scraper.py`
 
+(Located in the directory `Code/Scraper`)
+
 This is a Python script for scraping Airbnb listing data. It uses Selenium WebDriver to interact with the website, load pages, and extract data. The extracted data includes details like city, state, coast, title, price, link, room type, max guests, number of rooms, beds, baths, ratings, number of reviews, superhost status, house rules, and amenities.
 
 ## NOTE: It is important to note that some functionalities of the scraper might fail if the Airbnb site has been updated.
@@ -45,10 +47,10 @@ pip3 install selenium pandas
 1. To run the script for all 700 cities (for a shorter dataset, skip to the next section), simply execute the following command in your terminal:
 
 ```bash
-python Code/airbnb_scraper.py
+python Code/Scraper/airbnb_scraper.py
 ```
 
-2. The script will start scraping Airbnb listings for different cities provided in the `Code/cities_list.json` file.
+2. The script will start scraping Airbnb listings for different cities provided in the `Code/Scraper/cities_list.json` file.
 
 3. The script generates CSV files with Airbnb listings for each coast (East, West, North, South, Central). The files will be named `listings_<coast_name>_coast.csv`.
 
@@ -79,11 +81,11 @@ This dataset is used to run the EDA and train/test the models in the next sectio
 
 # Running the EDA and Model Python Notebooks
 
-The two notebooks are in the `Code` folder.
+The two notebooks are in the folders `EDA` and `Models` within the `Code` folder, 
 
-The first notebook is `airbnb_eda_notebook.ipynb` which was used to run our EDA processes.
+The first notebook is `EDA/airbnb_eda_notebook.ipynb` which was used to run our EDA processes.
 
-The second notebook is `airbnb_models_notebook.ipynb` which was used to train, test and compare our three models - XGBoost, LightGBM and a traditional Linear Regression model.
+The second notebook is `Models/airbnb_models_notebook.ipynb` which was used to train, test and compare our three models - XGBoost, LightGBM and a traditional Linear Regression model.
 
 To run both the notebooks, open them using Jupyter notebook or a python notebook editor of your choice.
 
