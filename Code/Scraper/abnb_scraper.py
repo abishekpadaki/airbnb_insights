@@ -11,7 +11,7 @@ def init_driver(browser):
     # Initialize the web driver based on the specified browser
     if browser.lower() == 'chrome':
         options = ChromeOptions()
-        #options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
         driver = webdriver.Chrome(executable_path='path/to/chromedriver', options=options)
@@ -257,9 +257,7 @@ def main():
 
     # Define different CSV files for each coast
     output_files = { 
-        'West': 'listings_west_coast.csv', 'East': 'listings_east_coast.csv', 
-        'North': 'listings_north_coast.csv', 'South': 'listings_south_coast.csv',
-        'Central': 'listings_central_coast.csv'
+        'West': 'listings_west_coast.csv'
     }
 
     # Write header row to all CSV files
@@ -268,11 +266,11 @@ def main():
 
     # Get list of city URLs to scrape
     cities = {}
-    with open('sf.json') as f:
+    with open('Code/Scraper/sf.json') as f:
         cities = json.load(f)
 
     # In case we want to limit the number of cities we scrape, uncomment this and edit coasts_to_scrape as needed
-    coasts_to_scrape = ['East', 'West', 'North', 'South', 'Central']
+    coasts_to_scrape = ['West']
     cities = [city for city in cities if city['coast'] in coasts_to_scrape]
 
     for city in cities:

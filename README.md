@@ -16,6 +16,14 @@ This is a final-project for the course CS267 called "Unearthing Hidden Insights 
 
 You can install all dependencies above by running `pip3 install -r Code/requirements.txt` Make sure you have pip installed to do this.
 
+In case you are running this on a Apple MacOS machine, you might run into issues installing lightgbm.
+
+To fix this follow the below steps:
+1. Make sure homebrew is installed on you Mac
+2. run `brew install gcc`
+3. run brew install CMake`
+4. run brew install lightgbm
+5. Now finally you should be able to run the pip installations without errors.
 # Part 1 - Airbnb Scraper
 
 `abnb_scraper.py`
@@ -52,14 +60,14 @@ python Code/Scraper/airbnb_scraper.py
 
 2. The script will start scraping Airbnb listings for different cities provided in the `Code/Scraper/cities_list.json` file.
 
-3. The script generates CSV files with Airbnb listings for each coast (East, West, North, South, Central). The files will be named `listings_<coast_name>_coast.csv`.
+3. The script generates CSV files with Airbnb listings for each coast (East, West, North, South, Central). The files will be named `listings_<coast_name>_coast.csv`. These files will be stored in the directory where you run the command.
 
 4. If there is a failure during the scraping of a specific listing, the script will save all the previously scraped listings to the corresponding CSV file and move on to the next listing.
 
 
 ## Run a sample test
 
-(The code has already been modified to generate a small dataset of the city of SF, so you can skip this.)
+(The code has already been modified to generate a small dataset of the city of SF, so you can skip this. On running, the execution should take around 3-5 mins to complete.)
 
 In order to run the scraper as a demo and generate a smaller dataset, you can make the following modifications:
 
