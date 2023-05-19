@@ -255,7 +255,7 @@
   "city": "Manchester",
   "state": "New Hampshire",
   "coast": "North",
-  "url_string": "manchester"
+  "url_string": "manchester--new-hampshire"
  },
  {
   "city": "Burlington",
@@ -267,7 +267,7 @@
   "city": "Portland",
   "state": "Maine",
   "coast": "North",
-  "url_string": "portland"
+  "url_string": "portland--maine"
  },
  {
   "city": "Minneapolis",
@@ -291,7 +291,7 @@
   "city": "Plymouth",
   "state": "Minnesota",
   "coast": "North",
-  "url_string": "plymouth"
+  "url_string": "plymouth--minnesota"
  },
  {
   "city": "Cleveland",
