@@ -21,8 +21,8 @@ In case you are running this on a Apple MacOS machine, you might run into issues
 To fix this follow the below steps:
 1. Make sure homebrew is installed on you Mac
 2. run `brew install gcc`
-3. run brew install CMake`
-4. run brew install lightgbm
+3. run `brew install CMake`
+4. run `brew install lightgbm`
 5. Now finally you should be able to run the pip installations without errors.
 
 
