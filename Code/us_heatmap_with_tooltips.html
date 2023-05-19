@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_55073f5b76a4ec974a494aaf7c6a34da {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_55073f5b76a4ec974a494aaf7c6a34da" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_55073f5b76a4ec974a494aaf7c6a34da = L.map(
+                "map_55073f5b76a4ec974a494aaf7c6a34da",
+                {
+                    center: [37.0902, -95.7129],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d89baf5ee49f9174c0162c1989c96fbe = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            var heat_map_8bcac1a34f7114c19e091a7d8a55f0bb = L.heatLayer(
+                [[41.083064, -81.518485, 112.42910447761194], [33.8347516, -117.911732, 144.87218045112783], [42.2681569, -83.7312291, 145.51481481481483], [33.7489924, -84.3902644, 94.97026022304833], [39.2908816, -76.610759, 70.88847583643123], [52.4796992, -1.9026911, 98.97368421052632], [42.3554334, -71.060511, 108.6231343283582], [42.8867166, -78.8783922, 100.55018587360595], [44.4761601, -73.212906, 151.9814814814815], [32.7884363, -79.9399309, 105.28571428571429], [35.2272086, -80.8430827, 91.27881040892193], [41.8755616, -87.6244212, 89.96654275092936], [39.1014537, -84.5124602, 97.73234200743494], [41.4996574, -81.6936772, 87.01486988847584], [32.7762719, -96.7968559, 93.80669144981412], [39.7392364, -104.984862, 83.56666666666666], [41.5910323, -93.6046655, 80.77037037037037], [43.0161693, -83.6900211, 126.31111111111112], [30.3321838, -81.655651, 94.65799256505576], [39.100105, -94.5781416, 85.28888888888889], [34.0536909, -118.242766, 113.79553903345725], [38.2542376, -85.759407, 90.20522388059702], [53.4794892, -2.2451148, 131.6925925925926], [35.1460249, -90.0517638, 115.64814814814815], [25.7741728, -80.19362, 94.70943396226416], [44.9772995, -93.2654692, 93.46641791044776], [29.9759983, -90.0782127, 105.7723880597015], [40.7127281, -74.0060152, 126.00746268656717], [52.666667, 1.0, 130.94795539033458], [35.4729886, -97.5170536, 80.95910780669145], [41.2587459, -95.9383758, 101.0111111111111], [28.5421109, -81.3790304, 99.51310861423221], [39.9527237, -75.1635262, 90.39700374531836], [50.3712659, -4.1425658, 137.85555555555555], [45.5202471, -122.674194, 112.90555555555555], [41.8239891, -71.4128343, 99.12781954887218], [35.7803977, -78.6390989, 94.98513011152416], [37.5385087, -77.43428, 92.19702602230483], [33.9824949, -117.3742389, 129.07364341085272], [38.5810606, -121.493895, 97.3271375464684], [32.7174202, -117.1627728, 103.3037037037037], [37.7790262, -122.419906, 102.41263940520446], [37.3361663, -121.890591, 75.42424242424242], [33.7494951, -117.8732213, 122.46816479400749], [32.0564572, -81.0951271, 53.333333333333336], [47.6038321, -122.330062, 80.56716417910448], [38.6280278, -90.1910154, 86.46666666666667], [27.9477595, -82.458444, 72.3932584269663], [36.8529841, -75.9774183, 141.04832713754647], [38.8950368, -77.0365427, 117.82592592592593], [37.6922361, -97.3375448, 105.1]],
+                {"blur": 15, "maxZoom": 18, "minOpacity": 0.5, "radius": 25}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            var circle_marker_36a3b8ddb73d64cf8e29171a75c5c253 = L.circleMarker(
+                [41.083064, -81.518485],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_36a3b8ddb73d64cf8e29171a75c5c253.bindTooltip(
+                `<div>
+                     Akron: $112.43
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_c2152ecb79273ad327dc2ca4cb8b7e3d = L.circleMarker(
+                [33.8347516, -117.911732],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_c2152ecb79273ad327dc2ca4cb8b7e3d.bindTooltip(
+                `<div>
+                     Anaheim: $144.87
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_66ba0d4ffabf8e0c862d187e8cbad77e = L.circleMarker(
+                [42.2681569, -83.7312291],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_66ba0d4ffabf8e0c862d187e8cbad77e.bindTooltip(
+                `<div>
+                     Ann Arbor: $145.51
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_c2e384a54aef062595b288e59a4f6a02 = L.circleMarker(
+                [33.7489924, -84.3902644],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_c2e384a54aef062595b288e59a4f6a02.bindTooltip(
+                `<div>
+                     Atlanta: $94.97
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_51a358d417c5f93188a11c4921567b16 = L.circleMarker(
+                [39.2908816, -76.610759],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_51a358d417c5f93188a11c4921567b16.bindTooltip(
+                `<div>
+                     Baltimore: $70.89
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ccee7bf12898308dd47d81a06ff4d29d = L.circleMarker(
+                [52.4796992, -1.9026911],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_ccee7bf12898308dd47d81a06ff4d29d.bindTooltip(
+                `<div>
+                     Birmingham: $98.97
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_00f9eb24b49cf5db38b0c77315037cc4 = L.circleMarker(
+                [42.3554334, -71.060511],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_00f9eb24b49cf5db38b0c77315037cc4.bindTooltip(
+                `<div>
+                     Boston: $108.62
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7c1fa473fc79dc8f5611c66322932545 = L.circleMarker(
+                [42.8867166, -78.8783922],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_7c1fa473fc79dc8f5611c66322932545.bindTooltip(
+                `<div>
+                     Buffalo: $100.55
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_cef8dacf157a6983cb7c3dcb7bc354d1 = L.circleMarker(
+                [44.4761601, -73.212906],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_cef8dacf157a6983cb7c3dcb7bc354d1.bindTooltip(
+                `<div>
+                     Burlington: $151.98
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_aa5c9cc1bdff4a58d683973ebb26adb7 = L.circleMarker(
+                [32.7884363, -79.9399309],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_aa5c9cc1bdff4a58d683973ebb26adb7.bindTooltip(
+                `<div>
+                     Charleston: $105.29
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_df04c99371cccac61302e3bee57e96a9 = L.circleMarker(
+                [35.2272086, -80.8430827],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_df04c99371cccac61302e3bee57e96a9.bindTooltip(
+                `<div>
+                     Charlotte: $91.28
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_675be8c82e5d51933c038a11bbd5f19d = L.circleMarker(
+                [41.8755616, -87.6244212],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_675be8c82e5d51933c038a11bbd5f19d.bindTooltip(
+                `<div>
+                     Chicago: $89.97
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4a9a8c69cadc2a20c5de44644a0d277b = L.circleMarker(
+                [39.1014537, -84.5124602],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_4a9a8c69cadc2a20c5de44644a0d277b.bindTooltip(
+                `<div>
+                     Cincinnati: $97.73
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_84f049471799d83bda4b54b2764ea86c = L.circleMarker(
+                [41.4996574, -81.6936772],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_84f049471799d83bda4b54b2764ea86c.bindTooltip(
+                `<div>
+                     Cleveland: $87.01
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_fecb6fb20d3471afbb97478f06e27edf = L.circleMarker(
+                [32.7762719, -96.7968559],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_fecb6fb20d3471afbb97478f06e27edf.bindTooltip(
+                `<div>
+                     Dallas: $93.81
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b97f08088da9343125f3dce76b3267e5 = L.circleMarker(
+                [39.7392364, -104.984862],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_b97f08088da9343125f3dce76b3267e5.bindTooltip(
+                `<div>
+                     Denver: $83.57
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7db98fec17cec11da2eeb6663efc6056 = L.circleMarker(
+                [41.5910323, -93.6046655],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_7db98fec17cec11da2eeb6663efc6056.bindTooltip(
+                `<div>
+                     Des Moines: $80.77
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_6e49467f18c8307e4ee397c7789b47f1 = L.circleMarker(
+                [43.0161693, -83.6900211],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_6e49467f18c8307e4ee397c7789b47f1.bindTooltip(
+                `<div>
+                     Flint: $126.31
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ac2813a05284037ef4266bcb71b12909 = L.circleMarker(
+                [30.3321838, -81.655651],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_ac2813a05284037ef4266bcb71b12909.bindTooltip(
+                `<div>
+                     Jacksonville: $94.66
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a90f30c5237fd9fbd8e44c3b647eb808 = L.circleMarker(
+                [39.100105, -94.5781416],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_a90f30c5237fd9fbd8e44c3b647eb808.bindTooltip(
+                `<div>
+                     Kansas City: $85.29
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f00fd2fae8358c6415196eb800d5b35b = L.circleMarker(
+                [34.0536909, -118.242766],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_f00fd2fae8358c6415196eb800d5b35b.bindTooltip(
+                `<div>
+                     Los Angeles: $113.80
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_36fd3fd1aaccbdcb34b505756c3ed953 = L.circleMarker(
+                [38.2542376, -85.759407],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_36fd3fd1aaccbdcb34b505756c3ed953.bindTooltip(
+                `<div>
+                     Louisville: $90.21
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ad52e2593df99739f73fbb38efd1c1c3 = L.circleMarker(
+                [53.4794892, -2.2451148],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_ad52e2593df99739f73fbb38efd1c1c3.bindTooltip(
+                `<div>
+                     Manchester: $131.69
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_417413310fbf2ed32e9df85d2aa184e7 = L.circleMarker(
+                [35.1460249, -90.0517638],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_417413310fbf2ed32e9df85d2aa184e7.bindTooltip(
+                `<div>
+                     Memphis: $115.65
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4172263643a08b0501cdbf1ca08b8278 = L.circleMarker(
+                [25.7741728, -80.19362],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_4172263643a08b0501cdbf1ca08b8278.bindTooltip(
+                `<div>
+                     Miami: $94.71
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ed26c31d4710f1b7c16324d5d8355614 = L.circleMarker(
+                [44.9772995, -93.2654692],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_ed26c31d4710f1b7c16324d5d8355614.bindTooltip(
+                `<div>
+                     Minneapolis: $93.47
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_8ab5e0b5632ef4613697e807e828c2f2 = L.circleMarker(
+                [29.9759983, -90.0782127],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_8ab5e0b5632ef4613697e807e828c2f2.bindTooltip(
+                `<div>
+                     New Orleans: $105.77
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7cde81e9f415b6d046343818034cebfc = L.circleMarker(
+                [40.7127281, -74.0060152],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_7cde81e9f415b6d046343818034cebfc.bindTooltip(
+                `<div>
+                     New York City: $126.01
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a165d2b9a2617b0338aa3715c8e8b1fb = L.circleMarker(
+                [52.666667, 1.0],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_a165d2b9a2617b0338aa3715c8e8b1fb.bindTooltip(
+                `<div>
+                     Norfolk: $130.95
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a7e867154fd7e4246fa6fc39575c0142 = L.circleMarker(
+                [35.4729886, -97.5170536],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_a7e867154fd7e4246fa6fc39575c0142.bindTooltip(
+                `<div>
+                     Oklahoma City: $80.96
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d04d2b5267fe5d82a68d931302675221 = L.circleMarker(
+                [41.2587459, -95.9383758],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_d04d2b5267fe5d82a68d931302675221.bindTooltip(
+                `<div>
+                     Omaha: $101.01
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_22640f64ec11b874ed952f7689895f46 = L.circleMarker(
+                [28.5421109, -81.3790304],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_22640f64ec11b874ed952f7689895f46.bindTooltip(
+                `<div>
+                     Orlando: $99.51
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_64b618cf6cf70460d237493c0a626ec8 = L.circleMarker(
+                [39.9527237, -75.1635262],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_64b618cf6cf70460d237493c0a626ec8.bindTooltip(
+                `<div>
+                     Philadelphia: $90.40
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4f81e67e490c59b4a50b7e773d38f85d = L.circleMarker(
+                [50.3712659, -4.1425658],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_4f81e67e490c59b4a50b7e773d38f85d.bindTooltip(
+                `<div>
+                     Plymouth: $137.86
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f2db3a8d4730603ee90d9127bcb6cf60 = L.circleMarker(
+                [45.5202471, -122.674194],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_f2db3a8d4730603ee90d9127bcb6cf60.bindTooltip(
+                `<div>
+                     Portland: $112.91
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a7d676504015c6c112e3c9e153b1af64 = L.circleMarker(
+                [41.8239891, -71.4128343],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_a7d676504015c6c112e3c9e153b1af64.bindTooltip(
+                `<div>
+                     Providence: $99.13
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d3251ba8956afae094fab2749f481e8f = L.circleMarker(
+                [35.7803977, -78.6390989],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_d3251ba8956afae094fab2749f481e8f.bindTooltip(
+                `<div>
+                     Raleigh: $94.99
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ef95b05a276cb0de93de331cdda14d54 = L.circleMarker(
+                [37.5385087, -77.43428],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_ef95b05a276cb0de93de331cdda14d54.bindTooltip(
+                `<div>
+                     Richmond: $92.20
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f4e81881ec21213cf9ee26aa37af49e9 = L.circleMarker(
+                [33.9824949, -117.3742389],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_f4e81881ec21213cf9ee26aa37af49e9.bindTooltip(
+                `<div>
+                     Riverside: $129.07
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f06f7f749c151c93e5b26691a66d00bd = L.circleMarker(
+                [38.5810606, -121.493895],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_f06f7f749c151c93e5b26691a66d00bd.bindTooltip(
+                `<div>
+                     Sacramento: $97.33
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_674a898ad2d42309b38f2af9edefd6a2 = L.circleMarker(
+                [32.7174202, -117.1627728],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_674a898ad2d42309b38f2af9edefd6a2.bindTooltip(
+                `<div>
+                     San Diego: $103.30
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d8af9d223a761c09dce3416b1c07ab75 = L.circleMarker(
+                [37.7790262, -122.419906],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_d8af9d223a761c09dce3416b1c07ab75.bindTooltip(
+                `<div>
+                     San Francisco: $102.41
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a86f35ba2d7cc3fb9a2b6e9369d44a8a = L.circleMarker(
+                [37.3361663, -121.890591],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_a86f35ba2d7cc3fb9a2b6e9369d44a8a.bindTooltip(
+                `<div>
+                     San Jose: $75.42
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_708f910b6b4c137ff11bf5371376e08c = L.circleMarker(
+                [33.7494951, -117.8732213],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_708f910b6b4c137ff11bf5371376e08c.bindTooltip(
+                `<div>
+                     Santa Ana: $122.47
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4240c8c3c6b064fde607926488261bd4 = L.circleMarker(
+                [32.0564572, -81.0951271],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_4240c8c3c6b064fde607926488261bd4.bindTooltip(
+                `<div>
+                     Savannah: $53.33
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_0d1b9c0885b1884ba4e65eb2ff21eed8 = L.circleMarker(
+                [47.6038321, -122.330062],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_0d1b9c0885b1884ba4e65eb2ff21eed8.bindTooltip(
+                `<div>
+                     Seattle: $80.57
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_152b824b7e6e1cc4750b42686c3e9a11 = L.circleMarker(
+                [38.6280278, -90.1910154],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_152b824b7e6e1cc4750b42686c3e9a11.bindTooltip(
+                `<div>
+                     St. Louis: $86.47
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f5f2e92ddddf8b7839154a7bd320b1c2 = L.circleMarker(
+                [27.9477595, -82.458444],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_f5f2e92ddddf8b7839154a7bd320b1c2.bindTooltip(
+                `<div>
+                     Tampa: $72.39
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9e16425b75c737566f2b58ad190a61f4 = L.circleMarker(
+                [36.8529841, -75.9774183],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_9e16425b75c737566f2b58ad190a61f4.bindTooltip(
+                `<div>
+                     Virginia Beach: $141.05
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_6fa9c0bf80d24b7ce5559dcd9e8df8e6 = L.circleMarker(
+                [38.8950368, -77.0365427],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_6fa9c0bf80d24b7ce5559dcd9e8df8e6.bindTooltip(
+                `<div>
+                     Washington: $117.83
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_419ab78647c50f90220a5a5a793a814d = L.circleMarker(
+                [37.6922361, -97.3375448],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_55073f5b76a4ec974a494aaf7c6a34da);
+        
+    
+            circle_marker_419ab78647c50f90220a5a5a793a814d.bindTooltip(
+                `<div>
+                     Wichita: $105.10
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
