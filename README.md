@@ -1,17 +1,30 @@
-# airbnb_insights
+This is a final-project for the course CS267 called "Unearthing Hidden Insights from Airbnb Data Using Gradient-Boosted Decision Trees"
 
-# Airbnb Scraper
-
-This is a Python script for scraping Airbnb listing data. It uses Selenium WebDriver to interact with the website, load pages, and extract data. The extracted data includes details like city, state, coast, title, price, link, room type, max guests, number of rooms, beds, baths, ratings, number of reviews, superhost status, house rules, and amenities.
-
-## Prerequisites
+## Prerequisites/Installations
 
 - Python 3.7+
 - Selenium WebDriver
-- Pandas
+- Pandas (v 1.5.3 or lower for append to work)
 - A modern web browser (Chrome or Firefox)
+- Numpy
+- Plotly
+- Seaborn
+- Matplotlib
+- Xgboost
+- Lightgbm
+- Jupyter Notebook or any Python Notebook application
 
-## Setup
+You can install all dependencies above by running `pip3 install -r requirements.txt` Make sure you have pip installed to do this.
+
+# Part 1 - Airbnb Scraper
+
+`abnb_scraper.py`
+
+This is a Python script for scraping Airbnb listing data. It uses Selenium WebDriver to interact with the website, load pages, and extract data. The extracted data includes details like city, state, coast, title, price, link, room type, max guests, number of rooms, beds, baths, ratings, number of reviews, superhost status, house rules, and amenities.
+
+## NOTE: It is important to note that some functionalities of the scraper might fail if the Airbnb site has been updated.
+
+## Setup of Scraper
 
 1. Make sure you have Python 3.7+ installed on your system. You can download it from the [official website](https://www.python.org/downloads/).
 
@@ -27,9 +40,9 @@ pip install selenium pandas
    
    Ensure the WebDriver executable is in your system's PATH, or adjust the `executable_path` argument in the `init_driver` function to point directly to your WebDriver executable.
 
-## Usage
+## Usage of Scraper
 
-1. To run the script, simply execute the following command in your terminal:
+1. To run the script for all 700 cities (for a shorter dataset, skip to the next section), simply execute the following command in your terminal:
 
 ```bash
 python airbnb_scraper.py
@@ -41,16 +54,34 @@ python airbnb_scraper.py
 
 4. If there is a failure during the scraping of a specific listing, the script will save all the previously scraped listings to the corresponding CSV file and move on to the next listing.
 
+
+## Run a sample test
+
+(The code has already been modified to generate a small dataset of the city of SF, so you can skip this.)
+
+In order to run the scraper as a demo and generate a smaller dataset, you can make the following modifications:
+
+1. In the main() function, change the variable `num_pages` from 15 to a smaller number like 1 or 2. This ensures the scraper crawls only 1 or 2 pages.
+
+2. In the same main() function, change the command to read the cities json from `cities_list.json` to `sf.json`. This ensures only one city (San Francisco) is crawled on.
+
+3. Go ahead and then follow the same steps as given in the previous section. The scraper should now create a single csv file called 
+
 ## Note
 
-Web scraping is subject to the terms of use of the website being scraped. Airbnb's terms of service do not allow for web scraping without prior permission. This code is provided for educational purposes only, and users are responsible for how they choose to use it.
+Web scraping is subject to the terms of use of the website being scraped. Airbnb's terms of service do not allow for web scraping on ceratin pages of their website, and we have ensured to respect their robot policies. 
 
-## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
+# Dataset
+After running our scraper previously, we pre-processed and merged our datasets into one csv file which is stored here as `model_ready_dataset`
 
-Please make sure to update tests as appropriate. 
+This dataset is used to run the EDA and train/test the models in the next section.
 
-## License
+# Running the EDA and Model Python Notebooks
 
-[MIT](https://choosealicense.com/licenses/mit/)
+The first notebook is `airbnb_eda_notebook.ipynb` which was used to run our EDA processes.
+
+The second notebook is `airbnb_models_notebook.ipynb` which was used to train, test and compare our three models - XGBoost, LightGBM and a traditional Linear Regression model.
+
+To run both the notebooks, open them using Jupyter notebook or a python notebook editor of your choice.
+
