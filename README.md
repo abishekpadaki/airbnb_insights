@@ -91,3 +91,8 @@ To run both the notebooks, open them using Jupyter notebook or a python notebook
 
 An interactive heatmap, as demoed during the presentation, can be seen by opening the file `us_heatmap_with_tooltips.html` in the `Code` folder
 
+
+# Github
+
+This project has ben maintained on Github. You can visit the repository to view this readme file in a neat markdown UI.
+https://github.com/abishekpadaki/airbnb_insights
